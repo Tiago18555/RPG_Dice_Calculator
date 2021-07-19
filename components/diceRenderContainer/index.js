@@ -9,29 +9,47 @@ import { StyleSheet,
   TextInput,
   Button,
 } from 'react-native';
-import { SmallDiceBox } from '../dice';
+import { DiceBox } from '../dice';
+import { addDice } from '../../App'
 
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+var arr = []
 
-export function DiceRenderContainer ({ diceType }) {
+export function DiceRenderContainer ( {arrayOfDices} ) {
 
+	const [disableButton, setDisableButton] = useState()
+	
+	let colorState = 'green'
+	console.log('arr =>', arr)
+	
+	if (arr.length < 20)
+	arr.push(arrayOfDices)
+	else setDisableButton(true)
+	
+	
+	if(disableButton) colorState = 'grey'
+	else colorState = 'green'
+
+	
 	return (
 		<>
 			<View style={styles.mainContainer}>
 				<View style={styles.container}>
 					{
-						['10', '20', 'D100'].map((item) =>
-							<>
-								<SmallDiceBox diceType={item} key={item}/>
-								<Ionicons name="add" size={24} color="green" />
-							</>
+						arr.map((item) =>
+								<DiceBox diceType={item} key={item}/>
 						)
 					}
-				</View>			
+				</View>
+				<View style={styles.container}>
+					<Text style={{position: 'absolute', top: -5, fontWeight: 700, fontSize: 15}}>RESULTADO</Text>
+					<TouchableOpacity style={styles.playButton}>
+						<FontAwesome name="play-circle-o" size={35} color={colorState} />
+					</TouchableOpacity>
+				</View>		
 			</View>
-
-			{/* <Button /> */}
 		</>
 	)
 }
@@ -48,14 +66,19 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	container : {
-		display: 'flex',
+		display: 'flex-box',
 		flexDirection: 'row',
+		flexFlow: 'wrap',
 		padding: 10,
-		justifyContent: 'space-between',	
 	},
 	title: {
 		fontSize: 20,
 		textAlign: 'center',
 		fontWeight: 600,
+	},
+	playButton: {
+		position: 'absolute',
+		top: -12,
+		left: 305,
 	}
 })

@@ -19,7 +19,7 @@ export function DiceBox ({diceType}) {
 	)
 }
 
-export function SmallDiceBox ({diceType}) {
+export function StaticDiceBox ({diceType}) {
 	return (
 		<>
 			<View style={styles.smallContainer}>
@@ -33,15 +33,17 @@ export function SmallDiceBox ({diceType}) {
 
 const styles = StyleSheet.create({
 	container: {
-		width: 90,
-		height: 90,
+		width: 50,
+		height: 50,
 		backgroundColor: '#888888',
-		border: '5px solid black',
-		borderRadius: '35px',
+		border: '2px solid black',
+		borderRadius: '10px',
+		padding: 0,
+		margin: 6,
 	},
 	p: {
-		fontSize: 30,
-		fontWeight: 900,
+		fontSize: 15,
+		fontWeight: 600,
 		textAlign: 'center',
 		margin: 'auto',
 		color: 'white',

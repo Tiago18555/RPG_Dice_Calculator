@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, 
   Text, 
   View, 
@@ -8,45 +8,35 @@ import { StyleSheet,
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { SmallDiceBox } from '../dice';
-
-import { AntDesign } from '@expo/vector-icons';
+import { StaticDiceBox } from '../dice';
 import { Ionicons } from '@expo/vector-icons';
 
-var allDices = [];
+var getRandomDices;
 
-export function SetDicesContainer ({ diceType }) {
+export function SetDicesContainer ({ callbackArray }) {
 	const [text, setText] = useState('');
-	//const [dice, setDice] = useState([allDices]);
+	const [arrayOfDices, setArrayOfDices] = React.useState([]);
 
 	return (
 		<>
 			<View style={styles.mainContainer}>
 				<Text style={styles.title}>ADICIONE DADOS OU VALOR FIXO</Text>
-				<View style={styles.container}>	
+				<View style={styles.container} onPress={generateRandomDiceValue()}>	
 					{
 						['D4', 'D6', 'D8', 'D10', 'D20', 'D100'].map((type) => 
-							<>
-								<SmallDiceBox 
-									onPress={
-										allDices.push( (type) => {
-											const setDice = {
-												'D4': {value: 4},
-												'D6': {value: 6},
-												'D8': {value: 8},
-												'D10': {value: 10},
-												'D20': {value: 20},
-												'D100': {value: 100},
-											}
-											min = Math.ceil(1);
-											max = Math.floor(setDice[type].value);
-											Math.floor(Math.random() * (setDice[type].value - 1 + 1)) + min;
-										})
-									}
-									diceType={type} 
+							<TouchableOpacity 
+								onPress={
+									setArrayOfDices.bind(
+										this, [ getRandomDices[type].value ]
+									),
+									callbackArray.bind(this, getRandomDices[type].value)
+								}
+							>
+								<StaticDiceBox 
+									diceType={type}
 									key={type}
 								/>
-							</>							
+							</TouchableOpacity>							
 						)
 					}
 				</View>
@@ -61,7 +51,12 @@ export function SetDicesContainer ({ diceType }) {
 						name="add-circle-sharp"
 						size={30} 
 						color="black" 
-						onPress={allDices.push( text )}
+						onPress={
+							setArrayOfDices.bind(this, [text])
+						}
+						onPress={
+							callbackArray.bind(this, arrayOfDices)
+						}
 					/>
 				</View>
 			</View>
@@ -93,6 +88,20 @@ const styles = StyleSheet.create({
 	}
 })
 
-// function calculate(arrayValues) {
-// 	arrayValues.map();
-// }
+function random(min, max) {
+	min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateRandomDiceValue () {
+    const setDice = {
+        'D4': {value: random(1, 4)},
+        'D6': {value: random(1, 6)},
+        'D8': {value: random(1, 8)},
+        'D10': {value: random(1, 10)},
+        'D20': {value: random(1, 20)},
+        'D100': {value: random(1, 100)},
+    }
+	getRandomDices = setDice;
+}
