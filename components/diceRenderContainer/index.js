@@ -17,16 +17,22 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 var arr = []
 
-export function DiceRenderContainer ( {arrayOfDices} ) {
+export function DiceRenderContainer ({ arrayOfDices }) {
+	//INDEXES => DB_0~25 DiceBox
 
 	const [disableButton, setDisableButton] = useState()
 	
 	let colorState = 'green'
-	console.log('arr =>', arr)
+	//console.log(`ANTES: arr => ${arr}, arrayOfDices=> ${arrayOfDices}`)
 	
-	if (arr.length < 20)
+	if (arr.length < 21) //Para limitar a quantidade de dados renderizados na box
 	arr.push(arrayOfDices)
-	else setDisableButton(true)
+	else{
+		if(!disableButton){	setDisableButton(true) } // Para evitar loop infinito no state durante o loading
+	} 
+
+
+	console.log(`DEPOIS: arr => ${arr}, arrayOfDices=> ${arrayOfDices}`)
 	
 	
 	if(disableButton) colorState = 'grey'
@@ -38,9 +44,11 @@ export function DiceRenderContainer ( {arrayOfDices} ) {
 			<View style={styles.mainContainer}>
 				<View style={styles.container}>
 					{
-						arr.map((item) =>
-								<DiceBox diceType={item} key={item}/>
-						)
+						arr.map((item, index) => {
+							//console.log(index, index !== 0)
+							if(index !== 0) //Para não renderizar o primeiro dado da array								
+								return	<DiceBox diceType={item} key={`DB_${index}`}/>								
+						})
 					}
 				</View>
 				<View style={styles.container}>

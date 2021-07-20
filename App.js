@@ -8,16 +8,16 @@ import { DiceRenderContainer } from './components/diceRenderContainer';
 
 
 export default function App() {
-  const [diceRender, setDiceRender] = useState();
+  const [diceRender, setDiceRender] = useState([]);
   var newData = []
   
   return (
     <>
       <View style={styles.container}>
         <SetDicesContainer 
-          callbackArray= {(data) => {
-            data
-            setDiceRender(data);
+          callbackArray= {({child}) => {
+            console.log(child)
+            setDiceRender(child);
         }}/>
         <DiceRenderContainer 
           arrayOfDices={

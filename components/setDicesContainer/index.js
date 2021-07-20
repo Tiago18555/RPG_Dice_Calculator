@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, 
+import { 
+  StyleSheet, 
   Text, 
   View, 
   Image, 
@@ -14,6 +15,10 @@ import { Ionicons } from '@expo/vector-icons';
 var getRandomDices;
 
 export function SetDicesContainer ({ callbackArray }) {
+	/*
+		INDEXES => SDB_0~6 StaticDiceBox, TO_0~6 TouchedOpacity
+	
+	*/
 	const [text, setText] = useState('');
 	const [arrayOfDices, setArrayOfDices] = React.useState([]);
 
@@ -23,19 +28,35 @@ export function SetDicesContainer ({ callbackArray }) {
 				<Text style={styles.title}>ADICIONE DADOS OU VALOR FIXO</Text>
 				<View style={styles.container} onPress={generateRandomDiceValue()}>	
 					{
-						['D4', 'D6', 'D8', 'D10', 'D20', 'D100'].map((type) => 
+						[
+							{child: 'D4', color: '#7AFA85'}, 
+							{child: 'D6', color: '#E3CE64'}, 
+							{child: 'D8', color: '#FF9D7D'}, 
+							{child: 'D10', color: '#DA85FF'}, 
+							{child: 'D20', color: '#7FBEEB'}, 
+							{child: 'D100', color: 'white'}
+						].map((type, index) => 
 							<TouchableOpacity 
 								onPress={
 									setArrayOfDices.bind(
-										this, [ getRandomDices[type].value ]
+										this, [{ 
+											color: type.color, //Cor do tipo de dado
+											child: type.child,  //Nome do tipo de dado
+											result: getRandomDices[type.child].value //Resultado do Random
+										}]
 									),
-									callbackArray.bind(this, getRandomDices[type].value)
+									callbackArray.bind(this, [{
+										color: type.color,									
+										child: type.child 
+									}])
 								}
+								key={`TO_${index}`}
 							>
 								<StaticDiceBox 
-									diceType={type}
-									key={type}
-								/>
+									diceType={type.child}
+									textColor={type.color}
+									key={`SDB_${index}`}
+									/>
 							</TouchableOpacity>							
 						)
 					}
@@ -96,12 +117,12 @@ function random(min, max) {
 
 function generateRandomDiceValue () {
     const setDice = {
-        'D4': {value: random(1, 4)},
-        'D6': {value: random(1, 6)},
-        'D8': {value: random(1, 8)},
-        'D10': {value: random(1, 10)},
-        'D20': {value: random(1, 20)},
-        'D100': {value: random(1, 100)},
+        'D4': {color: '#7AFA85', value: random(1, 4)},
+        'D6': {color: '#E3CE64', value: random(1, 6)},
+        'D8': {color: '#FF9D7D', value: random(1, 8)},
+        'D10': {color: '#DA85FF', value: random(1, 10)},
+        'D20': {color: '#7FBEEB', value: random(1, 20)},
+        'D100': {color: 'white', value: random(1, 100)},
     }
 	getRandomDices = setDice;
 }
