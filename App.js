@@ -15,8 +15,9 @@ export default function App() {
     <>
       <View style={styles.container}>
         <SetDicesContainer 
-          callbackArray= {({child}) => {
-            console.log(child)
+          callbackArray= {(child) => {
+            // console.log('sem desconstructuring: ', child)
+            // console.log('com desconstructuring: ', {child})
             setDiceRender(child);
         }}/>
         <DiceRenderContainer 
@@ -33,5 +34,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0ff',
     alignItems: 'center',
+    paddingTop: 20,
   },
 });

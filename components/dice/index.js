@@ -7,11 +7,17 @@ import { StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 
-export function DiceBox ({diceType}) {
+export function DiceBox ({diceType, textColor}) {
 	return (
 		<>
 			<View style={styles.container}>
-				<Text style={styles.p}>
+				<Text style={{
+					fontSize: 19,
+					fontWeight: "bold",
+					textAlign: 'center',
+					margin: 'auto',
+					color: textColor,
+				}}>
 					{diceType}
 				</Text>
 			</View>
@@ -24,8 +30,8 @@ export function StaticDiceBox ({diceType, textColor}) {
 		<>
 			<View style={styles.smallContainer}>
 				<Text style={{
-					fontSize: 15, 
-					fontWeight: 600, 
+					fontSize: 19, 
+					fontWeight: "bold", 
 					textAlign: 'center', 
 					margin: 'auto', 
 					color: textColor
@@ -42,24 +48,21 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		backgroundColor: '#666666',
-		border: '2px solid black',
-		borderRadius: '10px',
-		padding: 0,
-		margin: 6,
-	},
-	p: {
-		fontSize: 15,
-		fontWeight: 600,
-		textAlign: 'center',
-		margin: 'auto',
-		color: 'white',
+		borderColor: 'black',
+		borderStyle: 'solid',
+		borderWidth: 3,
+		borderRadius: 10,
+		paddingTop: 10,
+		margin: 4,
 	},
 	smallContainer: {
 		width: 50,
 		height: 50,
 		backgroundColor: '#666666',
-		border: '2px solid black',
-		borderRadius: '10px',
-		padding: 0,
+		borderColor: 'black',
+		borderStyle: 'solid',
+		borderWidth: 3,
+		borderRadius: 10,
+		paddingTop: 10
 	}
 })

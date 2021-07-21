@@ -20,7 +20,10 @@ export function SetDicesContainer ({ callbackArray }) {
 	
 	*/
 	const [text, setText] = useState('');
-	const [arrayOfDices, setArrayOfDices] = React.useState([]);
+	const [arrayOfDices, setArrayOfDices] = React.useState();
+
+	// console.log('state ', arrayOfDices)
+	// console.log('GTD ', getRandomDices)
 
 	return (
 		<>
@@ -39,16 +42,14 @@ export function SetDicesContainer ({ callbackArray }) {
 							<TouchableOpacity 
 								onPress={
 									setArrayOfDices.bind(
-										this, [{ 
-											color: type.color, //Cor do tipo de dado
-											child: type.child,  //Nome do tipo de dado
-											result: getRandomDices[type.child].value //Resultado do Random
-										}]
+										this, 
+										[getRandomDices[type.child].value] //Resultado do Random										
 									),
-									callbackArray.bind(this, [{
-										color: type.color,									
-										child: type.child 
-									}])
+									callbackArray.bind(this, [[
+										type.color,									
+										type.child,
+										getRandomDices[type.child].value
+									]])
 								}
 								key={`TO_${index}`}
 							>
@@ -56,15 +57,22 @@ export function SetDicesContainer ({ callbackArray }) {
 									diceType={type.child}
 									textColor={type.color}
 									key={`SDB_${index}`}
-									/>
-							</TouchableOpacity>							
+								/>
+							</TouchableOpacity>
 						)
 					}
 				</View>
 				<View style={styles.container}>
-					<Text style={{fontSize: 15, fontWeight: 600}}>FIXO: </Text>
+					<Text 
+						style={{
+							fontSize: 15, 
+							fontWeight: "600"
+						}}
+					>
+						FIXO: 
+					</Text>
 					<TextInput 
-						style={{width: '80%', border: '1px solid grey', height: 30}} 
+						style={styles.input} 
 						onChangeText={text => setText(text)}
 						defaultValue={text}
 					/>
@@ -92,8 +100,10 @@ const styles = StyleSheet.create({
 		margin: '1%',
 		padding: 10,
 		backgroundColor: '#ddd',
-		border: '5px solid black',
-		borderRadius: '10px',
+		borderColor: 'black',
+		borderStyle: 'solid',
+		borderWidth: 5,
+		borderRadius: 10,
 		justifyContent: 'space-between',
 	},
 	container : {
@@ -105,7 +115,14 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 20,
 		textAlign: 'center',
-		fontWeight: 600,
+		fontWeight: "600",
+	},
+	input: {
+		width: '80%', 
+		height: 30,
+		borderColor: 'grey',
+		borderStyle: 'solid',
+		borderWidth: 1,
 	}
 })
 
