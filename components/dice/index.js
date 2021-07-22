@@ -12,12 +12,13 @@ export function DiceBox ({diceType, textColor}) {
 		<>
 			<View style={styles.container}>
 				<Text style={{
-					fontSize: 19,
+					fontSize: 15,
 					fontWeight: "bold",
 					textAlign: 'center',
 					margin: 'auto',
 					color: textColor,
-				}}>
+				}}
+				>
 					{diceType}
 				</Text>
 			</View>
@@ -30,12 +31,13 @@ export function StaticDiceBox ({diceType, textColor}) {
 		<>
 			<View style={styles.smallContainer}>
 				<Text style={{
-					fontSize: 19, 
+					fontSize: 15, 
 					fontWeight: "bold", 
 					textAlign: 'center', 
 					margin: 'auto', 
 					color: textColor
-				}}>
+				}}
+				>
 					{diceType}
 				</Text>
 			</View>
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
 		borderStyle: 'solid',
 		borderWidth: 3,
 		borderRadius: 10,
-		paddingTop: 10,
+		paddingTop: 'auto',
 		margin: 4,
 	},
 	smallContainer: {
@@ -63,6 +65,6 @@ const styles = StyleSheet.create({
 		borderStyle: 'solid',
 		borderWidth: 3,
 		borderRadius: 10,
-		paddingTop: 10
+		paddingTop: 'auto',
 	}
 })

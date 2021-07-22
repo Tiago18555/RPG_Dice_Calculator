@@ -16,14 +16,16 @@ var getRandomDices;
 
 export function SetDicesContainer ({ callbackArray }) {
 	/*
-		INDEXES => SDB_0~6 StaticDiceBox, TO_0~6 TouchedOpacity
-	
+		INDEXES => SDB_0~6 StaticDiceBox, TO_0~6 TouchedOpacity	
 	*/
+
 	const [text, setText] = useState('');
 	const [arrayOfDices, setArrayOfDices] = React.useState();
+	const [addButton, setAddButton] = useState();
 
-	// console.log('state ', arrayOfDices)
-	// console.log('GTD ', getRandomDices)
+	if (text === '' && setAddButton === true) {
+		setAddButton(false);
+	}
 
 	return (
 		<>
@@ -65,8 +67,8 @@ export function SetDicesContainer ({ callbackArray }) {
 				<View style={styles.container}>
 					<Text 
 						style={{
-							fontSize: 15, 
-							fontWeight: "600"
+							fontSize: 30, 
+							fontWeight: "600",
 						}}
 					>
 						FIXO: 
@@ -75,18 +77,24 @@ export function SetDicesContainer ({ callbackArray }) {
 						style={styles.input} 
 						onChangeText={text => setText(text)}
 						defaultValue={text}
+						keyboardType='number-pad'
+						maxLength={2}
 					/>
-					<Ionicons 
-						name="add-circle-sharp"
-						size={30} 
-						color="black" 
-						onPress={
-							setArrayOfDices.bind(this, [text])
-						}
-						onPress={
-							callbackArray.bind(this, arrayOfDices)
-						}
-					/>
+					<TouchableOpacity
+						onPress={setArrayOfDices.bind(this, [text])}
+						onPress={callbackArray.bind(this, [[
+							'#FF7777',	//Cor do render do dado
+							text,		//Label
+							text		//Valor p/ array dos calculos
+						]])}
+						//Fazer um IF / ELSE (se addButton === false, disable = true<TouchableOpacity>)					
+					>
+						<Ionicons 
+							name="add-circle-sharp"
+							size={40} 
+							color="black" 
+						/>
+					</TouchableOpacity>
 				</View>
 			</View>
 		</>
@@ -118,11 +126,16 @@ const styles = StyleSheet.create({
 		fontWeight: "600",
 	},
 	input: {
-		width: '80%', 
-		height: 30,
+		width: '60%', 
+		height: 40,
 		borderColor: 'grey',
 		borderStyle: 'solid',
 		borderWidth: 1,
+		borderRadius: 10,
+		backgroundColor: '#FFFFFF',
+		fontSize: 25,
+		fontWeight: "700",
+		textAlign: 'center',
 	}
 })
 

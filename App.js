@@ -1,15 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { SmallDiceBox, DiceBox } from './components/dice';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { SetDicesContainer } from './components/setDicesContainer'
-import { Ionicons } from '@expo/vector-icons';
-import { DiceRenderContainer } from './components/diceRenderContainer';
+import DiceRenderContainer from './components/diceRenderContainer';
+import { ResultLabel } from './components/resultLabel'
 
 
 export default function App() {
   const [diceRender, setDiceRender] = useState([]);
+  // const [resetApp, setResetApp] = useState();
   var newData = []
+  var resultString = '';
   
   return (
     <>
@@ -23,7 +23,9 @@ export default function App() {
         <DiceRenderContainer 
           arrayOfDices={
             newData = newData === [] ? 'teste' : diceRender
-          }/>
+          }
+          resultString={resultString}
+          />
       </View>
     </>
   );

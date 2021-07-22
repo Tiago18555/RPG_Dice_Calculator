@@ -15,9 +15,3 @@ export function generateRandomDiceValue (type) {
     }	
 	return setDice[type].value;
 }
-
-export function setArrayOfDices (newValue, arrayOfDices) {
-	arrayOfDices.push(newValue);
-	console.log(arrayOfDices);
-	return arrayOfDices;
-}
