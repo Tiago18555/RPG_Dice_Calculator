@@ -1,31 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { 
   StyleSheet, 
   Text, 
   View, 
-  Image, 
-  ScrollView, 
   TouchableOpacity,
-  TextInput,
 } from 'react-native';
 import { StaticDiceBox } from '../dice';
-import { Ionicons } from '@expo/vector-icons';
+import AddFixValueBox from '../addFixValueBox';
 
-var getRandomDices;
+//var getRandomDices;
 
-export function SetDicesContainer ({ callbackArray }) {
+export function SetDicesContainer ({ callbackArray, diceKit, arrayOfDices }) {
 	/*
 		INDEXES => SDB_0~6 StaticDiceBox, TO_0~6 TouchedOpacity	
 	*/
 
-	const [text, setText] = useState('');
-	const [arrayOfDices, setArrayOfDices] = React.useState();
-	const [addButton, setAddButton] = useState();
-
-	if (text === '' && setAddButton === true) {
-		setAddButton(false);
-	}
+	/*const [arrayOfDices, setArrayOfDices] = useState();*/
 
 	return (
 		<>
@@ -33,26 +23,21 @@ export function SetDicesContainer ({ callbackArray }) {
 				<Text style={styles.title}>ADICIONE DADOS OU VALOR FIXO</Text>
 				<View style={styles.container} onPress={generateRandomDiceValue()}>	
 					{
-						[
-							{child: 'D4', color: '#7AFA85'}, 
-							{child: 'D6', color: '#E3CE64'}, 
-							{child: 'D8', color: '#FF9D7D'}, 
-							{child: 'D10', color: '#DA85FF'}, 
-							{child: 'D20', color: '#7FBEEB'}, 
-							{child: 'D100', color: 'white'}
-						].map((type, index) => 
+						diceKit.map((type, index) => 
 							<TouchableOpacity 
 								onPress={
-									setArrayOfDices.bind(
-										this, 
-										[getRandomDices[type.child].value] //Resultado do Random										
-									),
-									callbackArray.bind(this, [[
-										type.color,									
-										type.child,
-										getRandomDices[type.child].value
-									]])
-								}
+									() => {
+										if (arrayOfDices.length < 20) {
+											arrayOfDices.push([
+												type.child, 
+												type.color, 
+												generateRandomDiceValue()[type.child].value
+											])
+											//console.log('=>', arrayOfDices)
+										}
+										callbackArray(arrayOfDices)
+									}
+								}								
 								key={`TO_${index}`}
 							>
 								<StaticDiceBox 
@@ -64,38 +49,10 @@ export function SetDicesContainer ({ callbackArray }) {
 						)
 					}
 				</View>
-				<View style={styles.container}>
-					<Text 
-						style={{
-							fontSize: 30, 
-							fontWeight: "600",
-						}}
-					>
-						FIXO: 
-					</Text>
-					<TextInput 
-						style={styles.input} 
-						onChangeText={text => setText(text)}
-						defaultValue={text}
-						keyboardType='number-pad'
-						maxLength={2}
-					/>
-					<TouchableOpacity
-						onPress={setArrayOfDices.bind(this, [text])}
-						onPress={callbackArray.bind(this, [[
-							'#FF7777',	//Cor do render do dado
-							text,		//Label
-							text		//Valor p/ array dos calculos
-						]])}
-						//Fazer um IF / ELSE (se addButton === false, disable = true<TouchableOpacity>)					
-					>
-						<Ionicons 
-							name="add-circle-sharp"
-							size={40} 
-							color="black" 
-						/>
-					</TouchableOpacity>
-				</View>
+				<AddFixValueBox 
+					arrayOfDices={arrayOfDices}
+					callbackArray={callbackArray}
+				/>
 			</View>
 		</>
 	)
@@ -124,18 +81,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		textAlign: 'center',
 		fontWeight: "600",
-	},
-	input: {
-		width: '60%', 
-		height: 40,
-		borderColor: 'grey',
-		borderStyle: 'solid',
-		borderWidth: 1,
-		borderRadius: 10,
-		backgroundColor: '#FFFFFF',
-		fontSize: 25,
-		fontWeight: "700",
-		textAlign: 'center',
 	}
 })
 
@@ -146,7 +91,7 @@ function random(min, max) {
 }
 
 function generateRandomDiceValue () {
-    const setDice = {
+    return {
         'D4': {color: '#7AFA85', value: random(1, 4)},
         'D6': {color: '#E3CE64', value: random(1, 6)},
         'D8': {color: '#FF9D7D', value: random(1, 8)},
@@ -154,5 +99,5 @@ function generateRandomDiceValue () {
         'D20': {color: '#7FBEEB', value: random(1, 20)},
         'D100': {color: 'white', value: random(1, 100)},
     }
-	getRandomDices = setDice;
+	// getRandomDices = setDice;
 }

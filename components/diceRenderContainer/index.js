@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 var arr = [], arrResult = []
 
-function DiceRenderContainer ({ arrayOfDices, resultString }) {
+function DiceRenderContainer ({ arrayOfDices, resultString, setDiceRender }) {
 	//INDEXES => DB_0~25 DiceBox
 
 	const [disableButton, setDisableButton] = useState()
@@ -17,11 +17,10 @@ function DiceRenderContainer ({ arrayOfDices, resultString }) {
 	if(disableButton) colorState = 'grey'
 	else colorState = 'green'
 
-	if (arr.length < 20) {
-		if(arrayOfDices[0] !== undefined) {
-			arr.push(arrayOfDices[0])
-			arrResult.push(arrayOfDices[0][2])
-		}
+	if(arrayOfDices.length < 20) {
+		arr = arrayOfDices
+		arrResult = arr.map((item) => item[2])
+		console.log(arrResult)
 	}else{
 		if(!disableButton){	setDisableButton(true) } // Para evitar loop infinito no state durante o loading
 	}
@@ -34,8 +33,8 @@ function DiceRenderContainer ({ arrayOfDices, resultString }) {
 						arr.map((item, index) => {
 							return	(
 								<DiceBox 
-									diceType={item[1]} 
-									textColor={item[0]} 
+									diceType={item[0]} 
+									textColor={item[1]} 
 									key={`DB_${index}`}
 								/>
 							)								
@@ -46,6 +45,8 @@ function DiceRenderContainer ({ arrayOfDices, resultString }) {
 					arrResult={arrResult}
 					resultString={resultString}
 					colorState={colorState}
+					arrayOfDices={arrayOfDices}
+					setDiceRender={setDiceRender}
 				/>
 			</View>
 		</>

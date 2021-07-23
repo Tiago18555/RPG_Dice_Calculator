@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { calculate } from '../diceRenderContainer'
+import { reset } from '../../App';
 
-export default function ResultLabel ({ arrResult, resultString, colorState }) {
+export default function ResultLabel ({ arrResult, resultString, colorState, arrayOfDices, setDiceRender }) {
 
 	const [resultLabel, setResultLabel] = useState()
 
@@ -27,8 +28,10 @@ export default function ResultLabel ({ arrResult, resultString, colorState }) {
 				<View style={styles.subContainer}>
 					<TouchableOpacity 
 						style={styles.playButton}
-						onPress={resultString = calculate(resultString, arrResult)} 
-						onPress={setResultLabel.bind(this, [resultString])}
+						onPress={() => {
+							resultString = calculate(resultString, arrResult)
+							setResultLabel(resultString)
+						}}
 					>
 						<FontAwesome 
 							name="play-circle-o" 
@@ -38,7 +41,9 @@ export default function ResultLabel ({ arrResult, resultString, colorState }) {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.playButton}
-							// onPress={setRefreshPage.bind(type, ["refresh"])}					
+							onPress={() => {
+								reset()
+							}}					
 					>
 						<FontAwesome 
 							name="refresh" 

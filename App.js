@@ -1,31 +1,37 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SetDicesContainer } from './components/setDicesContainer'
 import DiceRenderContainer from './components/diceRenderContainer';
-import { ResultLabel } from './components/resultLabel'
 
+var arrayOfDices = [];
+var resultString = '';
 
 export default function App() {
   const [diceRender, setDiceRender] = useState([]);
-  // const [resetApp, setResetApp] = useState();
-  var newData = []
-  var resultString = '';
+
+  const diceKit = [
+    {child: 'D4', color: '#7AFA85'}, 
+    {child: 'D6', color: '#E3CE64'}, 
+    {child: 'D8', color: '#FF9D7D'}, 
+    {child: 'D10', color: '#DA85FF'}, 
+    {child: 'D20', color: '#7FBEEB'}, 
+    {child: 'D100', color: 'white'}
+  ]
   
   return (
     <>
       <View style={styles.container}>
         <SetDicesContainer 
-          callbackArray= {(child) => {
-            // console.log('sem desconstructuring: ', child)
-            // console.log('com desconstructuring: ', {child})
-            setDiceRender(child);
-        }}/>
+          callbackArray={setDiceRender.bind(this, [arrayOfDices])}
+          diceKit={diceKit}
+          arrayOfDices={arrayOfDices}
+        />
+        {console.log('=> ', arrayOfDices)}
         <DiceRenderContainer 
-          arrayOfDices={
-            newData = newData === [] ? 'teste' : diceRender
-          }
+          arrayOfDices={arrayOfDices}
           resultString={resultString}
-          />
+          setDiceRender={setDiceRender}
+        />
       </View>
     </>
   );
@@ -39,3 +45,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
 });
+
+// export function reset () {
+//   resultString = ''
+//   arrayOfDices = []
+//   setDiceRender()
+// }
