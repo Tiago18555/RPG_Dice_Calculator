@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 var arr = [], arrResult = []
 
-function DiceRenderContainer ({ arrayOfDices, resultString, setDiceRender }) {
+function DiceRenderContainer ({ arrayOfDices, resultString, reset }) {
 	//INDEXES => DB_0~25 DiceBox
 
 	const [disableButton, setDisableButton] = useState()
@@ -45,8 +45,7 @@ function DiceRenderContainer ({ arrayOfDices, resultString, setDiceRender }) {
 					arrResult={arrResult}
 					resultString={resultString}
 					colorState={colorState}
-					arrayOfDices={arrayOfDices}
-					setDiceRender={setDiceRender}
+					reset={reset}
 				/>
 			</View>
 		</>

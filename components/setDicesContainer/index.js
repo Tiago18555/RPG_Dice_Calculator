@@ -35,6 +35,9 @@ export function SetDicesContainer ({ callbackArray, diceKit, arrayOfDices }) {
 											])
 											//console.log('=>', arrayOfDices)
 										}
+										// else{
+											
+										// }
 										callbackArray(arrayOfDices)
 									}
 								}								

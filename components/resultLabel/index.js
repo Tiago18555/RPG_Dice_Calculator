@@ -1,13 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { calculate } from '../diceRenderContainer'
-import { reset } from '../../App';
 
-export default function ResultLabel ({ arrResult, resultString, colorState, arrayOfDices, setDiceRender }) {
+export default function ResultLabel ({ arrResult, resultString, colorState, reset }) {
 
 	const [resultLabel, setResultLabel] = useState()
+
+	useEffect(() => {
+			if (arrResult.length === 0)
+				setResultLabel('')
+		}, [arrResult[0]]
+	)
 
 	return (
 		<>
@@ -68,16 +73,5 @@ const styles = StyleSheet.create({
 		margin: 0,
 		padding: 0,
 	},
-	playButton: {
-		// position: 'absolute',
-		// top: -50,
-		// left: 320,
-	},
-	refreshButton: {
-		// position: 'absolute',
-		// top: 600,
-		// left: 295,
-	}
-
 })
 

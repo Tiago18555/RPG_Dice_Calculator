@@ -17,6 +17,12 @@ export default function App() {
     {child: 'D20', color: '#7FBEEB'}, 
     {child: 'D100', color: 'white'}
   ]
+
+  const reset = () => {
+    resultString = ''
+    arrayOfDices = []
+    setDiceRender([])
+  }
   
   return (
     <>
@@ -26,16 +32,18 @@ export default function App() {
           diceKit={diceKit}
           arrayOfDices={arrayOfDices}
         />
-        {console.log('=> ', arrayOfDices)}
+        {/* {console.log('=> ', arrayOfDices)} */}
         <DiceRenderContainer 
           arrayOfDices={arrayOfDices}
           resultString={resultString}
           setDiceRender={setDiceRender}
+          reset={reset}
         />
       </View>
     </>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -46,8 +54,3 @@ const styles = StyleSheet.create({
   },
 });
 
-// export function reset () {
-//   resultString = ''
-//   arrayOfDices = []
-//   setDiceRender()
-// }
